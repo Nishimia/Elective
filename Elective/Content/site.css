@@ -1,0 +1,27 @@
+﻿html{
+	height: 100%;
+}
+
+body{
+	position: relative;
+	min-height: 100%;
+}
+
+main{
+	min-height: 100%;
+	padding-bottom: 3rem;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 3rem;
+	background-color: #343a40;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.pointer{
+	cursor: pointer;
+}
+

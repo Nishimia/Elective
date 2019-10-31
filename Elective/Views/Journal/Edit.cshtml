@@ -1,0 +1,70 @@
+﻿@model Elective.Models.JournalModels.JournalEditModel
+@using  Elective.HtmlHelpers
+
+@{
+	ViewBag.Title = "Edit";
+}
+<div class="container mb-1 mt-2">
+	<div class="row mt-3 mb-3">
+		<div class="col-sm-3">
+			<h2>Students</h2>
+		</div>
+		<div class="col-sm-6 float-right">
+			<input type="text" id="search-field" class="form-control" onkeyup="search('search-field', '.table-row', '.user-name, .dirst-name, .second-name')" placeholder="Search" />
+		</div>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-sm-2 m-0 pointer" onclick="sortTable('#table', '.table-row', '.user-name')">
+				<h5 class="pointer">
+					Student name
+				</h5>
+			</div>
+			<div class="col-sm-2 m-0 pointer" onclick="sortTable('#table', '.table-row', '.first-name')">
+				<h5 class="pointer">
+					Student mark
+				</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@using (Html.BeginForm("Edit", "Journal"))
+{
+	@Html.AntiForgeryToken()
+	@Html.Hidden("model.CourseId", Model.CourseId)
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@for (var i = 0; i < Model.UserJournalModels.Count(); i++)
+		{
+			@Html.Hidden(string.Format("model.UserJournalModels[{0}].UserId", i), Model.UserJournalModels[i].UserId);
+			<div class="card mb-2 table-row">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-2 user-name">
+							@Html.DisplayFor(model => model.UserJournalModels[i].UserName)
+						</div>
+						<div class="col-sm-2 first-name">
+							@Html.TextBox(string.Format("model.UserJournalModels[{0}].Mark", i), Model.UserJournalModels[i].Mark, new { @type = "number", @min="0", @max="100" })
+							@Html.ValidationMessageFor(model => model.UserJournalModels[i].Mark, "", new { @class = "text-danger" })
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		<div class="row">
+			<div class="form-group col-sm-1">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+			<div class="col-sm-9">
+				@Html.Button("Back to Courses", "/Journal?login=" + User.Identity.Name, "btn-secondary", "float-right")
+			</div>
+		</div>
+	</div>
+}

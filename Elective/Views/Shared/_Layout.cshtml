@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			@Html.ActionLink("Electives", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav mr-auto">
+					<li class="nav-item">@Html.ActionLink("Courses", "AvailableCourses", "Course", null, new { @class = "nav-link" })</li>
+					@if (User.IsInRole(ElectiveBLL.Constants.TUTOR_ROLE_NAME))
+					{
+						<li class="nav-item">@Html.ActionLink("Course Jourlnals", "Index", "Journal", new { login = User.Identity.Name}, new { @class = "nav-link" })</li>
+					}
+					@if (User.IsInRole(ElectiveBLL.Constants.ADMIN_ROLE_NAME))
+					{
+						<li class="nav-item">@Html.ActionLink("Manage Courses", "Index", "Course", null, new { @class = "nav-link" })</li>
+						<li class="nav-item">@Html.ActionLink("Manage Users", "Index", "User", null, new { @class = "nav-link" })</li>
+						<li class="nav-item">@Html.ActionLink("Manage Subjects", "Index", "Subject", null, new { @class = "nav-link" })</li>
+					}
+				</ul>
+				@Html.Partial("_LoginPartial")
+			</div>
+		</div>
+	</nav>
+	<main class="container">
+		@RenderBody()
+	</main>
+	<footer>
+		<div class="container">
+			<span class="text-muted">&copy; My copyrights</span>
+		</div>
+	</footer>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+</body>
+</html>

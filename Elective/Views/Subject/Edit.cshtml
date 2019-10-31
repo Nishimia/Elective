@@ -1,0 +1,40 @@
+﻿@model Elective.Models.SubjectModels.SubjectEditModel
+@using Elective.HtmlHelpers
+
+@{
+	ViewBag.Title = "Edit";
+}
+
+<div class="container mt-3 mb-3">
+	<h2>Edit Subject</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.SubjectId)
+		<div class="form-group">
+			<h5 class="pointer">
+				@Html.LabelFor(model => model.SubjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+			</h5>
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.SubjectName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter subject name" } })
+				@Html.ValidationMessageFor(model => model.SubjectName, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm-1">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+			<div class="col-sm-9">
+				@Html.Button("Back to Subjects", "/Subject/Index", "btn-secondary", "float-right")
+			</div>
+		</div>
+	</div>
+}

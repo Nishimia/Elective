@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Elective.Models.UserModels.UserViewModel>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<div class="container mb-1 mt-2">
+	<div class="row mt-3 mb-3">
+		<div class="col-sm-3">
+			<h2>Users</h2>
+		</div>
+		<div class="col-sm-6 float-right">
+			<input type="text" id="search-field" class="form-control" onkeyup="search('search-field', '.table-row', '.user-name, .dirst-name, .second-name')" placeholder="Search" />
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-sm-2 m-0 pointer" onclick="sortTable('#table', '.table-row', '.user-name')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.UserName)
+				</h5>
+			</div>
+			<div class="col-sm-2 m-0 pointer" onclick="sortTable('#table', '.table-row', '.first-name')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.FirstName)
+				</h5>
+			</div>
+			<div class="col-sm-2 m-0" onclick="sortTable('#table', '.table-row', '.second-name')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.SecondName)
+				</h5>
+			</div>
+			<div class="col-sm-1 m-0" onclick="sortTable('#table', '.table-row', '.is-tutor')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.IsTutor)
+				</h5>
+			</div>
+			<div class="col-sm-1 m-0" onclick="sortTable('#table', '.table-row', '.is-banned')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.IsBanned)
+				</h5>
+			</div>
+			<div class="col-sm-2 m-0" onclick="sortTable('#table', '.table-row', '.course-amount')">
+				<h5 class="pointer">
+					@Html.DisplayNameFor(model => model.CourseAmount)
+				</h5>
+			</div>
+			<div class="col-sm-2 m-0">
+				<h5>Actions</h5>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="table">
+	@foreach (var item in Model)
+	{
+		<div class="card mb-2 table-row">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-2 user-name">
+						@Html.DisplayFor(modelItem => item.UserName)
+					</div>
+					<div class="col-sm-2 first-name">
+						@Html.DisplayFor(modelItem => item.FirstName)
+					</div>
+					<div class="col-sm-2 second-name">
+						@Html.DisplayFor(modelItem => item.SecondName)
+					</div>
+					<div class="col-sm-1 is-tutor">
+						@{
+							if (item.IsTutor)
+							{
+								@:Tutor
+							}
+						}
+					</div>
+					<div class="col-sm-1 is-banned">
+						@{
+							if (item.IsBanned)
+							{
+								@:Banned
+							}
+						}
+					</div>	
+					<div class="col-sm-2 course-amount">
+						@Html.DisplayFor(modelItem => item.CourseAmount)
+					</div>
+					<div class="col-sm-2">
+						@Html.ActionLink("Edit", "Edit", new { id = item.UserId })
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+<script type="text/javascript" src="~/Scripts/search.js"></script>
+<script type="text/javascript" src="~/Scripts/sort.js"></script>

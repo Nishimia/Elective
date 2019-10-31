@@ -1,0 +1,39 @@
+﻿@model Elective.Models.AccountModels.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+	<dl class="dl-horizontal">
+		<dt>Password:</dt>
+		<dd>
+			[
+			@if (Model.HasPassword)
+			{
+				@Html.ActionLink("Change your password", "ChangePassword")
+			}
+			else
+			{
+				@Html.ActionLink("Create", "SetPassword")
+			}
+			]
+		</dd>
+		<dt>Future Courses:</dt>
+		<dd>
+			@Html.ActionLink("Future Courses", "FutureCourses", "User")
+		</dd>
+		<dt>Passed Courses:</dt>
+		<dd>
+			@Html.ActionLink("Passed Courses", "PassedCourses", "User") 
+		</dd>
+		<dt>Active Courses:</dt>
+		<dd>
+			@Html.ActionLink("Active Courses", "ActiveCourses", "User")
+		</dd>
+	</dl>
+</div>

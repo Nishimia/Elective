@@ -1,0 +1,59 @@
+﻿@using Elective.HtmlHelpers;
+@model IEnumerable<Elective.Models.SubjectModels.SubjectViewModel>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<div class="container mb-1 mt-2">
+	<div class="row mt-3 mb-3">
+		<div class="col-sm-3">
+			<h2>Subjects</h2>
+		</div>
+		<div class="col-sm-6">
+			<input type="text" id="search-field" class="form-control" onkeyup="search('search-field', '.table-row', '.subject-name')" placeholder="Search" />
+		</div>
+		<div class="col-sm-3 float-right">
+			@Html.Button("Create New", Url.Action("Create", "Subject"), "float-right")
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<div class="card-header">
+			<div class="row">
+				<div class="col-sm-8 m-0" onclick="sortTable('#table', '.table-row', '.subject-name')">
+					<h3 class="pointer">
+						@Html.DisplayNameFor(model => model.SubjectName)
+					</h3>
+				</div>
+				<div class="col-sm-4 m-0">
+					<h3>
+						Actions
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="table">
+		@foreach (var item in Model)
+		{
+			<div class="card mb-2 table-row">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-8 subject-name">
+							@Html.DisplayFor(modelItem => item.SubjectName)
+						</div>
+						<div class="col-sm-4">
+							@Html.ActionLink("Edit", "Edit", new { id = item.SubjectId }) |
+							@Html.ActionLink("Delete", "Delete", new { id = item.SubjectId })
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/sort.js"></script>
+<script type="text/javascript" src="~/Scripts/search.js"></script>

@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Elective.Models.CourseModels.CourseViewModel>
+
+@{
+	ViewBag.Title = "AvailableCourses";
+}
+
+<div class="container mb-1 mt-2">
+	<div class="row mt-3 mb-3">
+		<div class="col-sm-3 float-left">
+			<h2>Courses</h2>
+		</div>
+		<div class="col-sm-6">
+			<input type="text" id="search-field" class="form-control" onkeyup="search('search-field', '.table-row', '.course-name, .start-date, .end-date')" placeholder="Search" />
+		</div>
+		<div class="col-sm-3 float-right">
+			@Html.DropDownList("Subjects", (IEnumerable<SelectListItem>)ViewBag.Subjects,
+		   new { @class = "form-control choices", placeholder = "Select tutor", @id = "subjectChoice", @multiple="multiple",
+			   @onchange ="searchDropDown('subjectChoice', '.table-row', '.subjects')" })
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="card">
+		<div class="card-header">
+			<div class="row">
+				<div class="col-sm-4 m-0 pointer" onclick="sortTable('#table', '.table-row', '.course-name')">
+					<h5 class="pointer">
+						@Html.DisplayNameFor(model => model.CourseName)
+					</h5>
+				</div>
+				<div class="col-sm-1 m-0" onclick="sortTable('#table', '.table-row', '.user-amount')">
+					<h5 class="pointer">
+						@Html.DisplayNameFor(model => model.UserAmount)
+					</h5>
+				</div>
+				<div class="col-sm-2 m-0" onclick="sortTable('#table', '.table-row', '.start-date')">
+					<h5 class="pointer">
+						@Html.DisplayNameFor(model => model.StartDate)
+					</h5>
+				</div>
+				<div class="col-sm-2 m-0" onclick="sortTable('#table', '.table-row', '.end-date')">
+					<h5 class="pointer">
+						@Html.DisplayNameFor(model => model.EndDate)
+					</h5>
+				</div>
+				<div class="col-sm-1 m-0" onclick="sortTable('#table', '.table-row', '.days')">
+					<h5 class="pointer">
+						@Html.DisplayNameFor(model => model.Days)
+					</h5>
+				</div>
+				<div class="col-sm-2 m-0">
+					<h5>Actions</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="table">
+		@foreach (var item in Model)
+		{
+			<div class="card mb-2 table-row">
+				<div class="card-body">
+					<div class="row">
+						@Html.HiddenFor(modelItem => item.Subjects, new { @class = "subjects" })
+						<div class="col-sm-4 course-name">
+							@Html.DisplayFor(modelItem => item.CourseName)
+						</div>
+						<div class="col-sm-1 user-amount">
+							@Html.DisplayFor(modelItem => item.UserAmount)
+						</div>
+						<div class="col-sm-2 start-date">
+							@{
+								string startDate = item.StartDate.Date.ToString("dd/MM/yyyy");
+							}
+							@Html.DisplayFor(modelItem => startDate)
+						</div>
+						<div class="col-sm-2 end-date">
+							@{
+								string endDate = item.EndDate.Date.ToString("dd/MM/yyyy");
+							}
+							@Html.DisplayFor(modelItem => endDate)
+						</div>
+						<div class="col-sm-1 days">
+							@Html.DisplayFor(modelItem => item.Days)
+						</div>
+						<div class="col-sm-2">
+							@Html.ActionLink("Details", "Details", new { id = item.CourseId })
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/sort.js"></script>
+<script type="text/javascript" src="~/Scripts/search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+<script>
+	const choices = new Choices('.choices');
+</script>
